@@ -18,6 +18,39 @@
 7. `--cache-only` により定期実行・オフライン再実行にも対応
 8. CLIに加え、ブラウザから操作できるWeb GUI（FastAPI + React）を提供
 
+## 動作環境
+
+macOS・Linux・Windowsのいずれでも動作します（動作確認は主にmacOSで実施）。
+以下を事前にインストールしてください。
+
+| 項目 | 要件 | 備考 |
+|---|---|---|
+| Python | 3.10以上 | `str \| None` 形式の型ヒントを使用しているため3.10未満では動作しません |
+| Node.js | 18以上推奨 | Web GUIのフロントエンド（`webapp/frontend/`）をビルド・開発する場合のみ必要。CLIのみ使う場合は不要。開発時はNode 22（LTS）で動作確認済み |
+| Anthropicアカウント | APIキーが必要 | Claude APIは従量課金です。料金は[公式サイト](https://www.anthropic.com/pricing)を参照してください |
+
+保有銘柄CSVの文字コード（Shift-JIS/CP932）は自動判別して読み込むため、OSによる
+文字化けは基本的に発生しません。
+
+### Windowsでの実行について
+
+コマンド例はmacOS/Linux（bash）を前提に記載していますが、Windowsでは主に
+以下の点が異なります。
+
+- **仮想環境の有効化コマンド**が異なります。
+  - コマンドプロンプト: `.venv\Scripts\activate.bat`
+  - PowerShell: `.venv\Scripts\Activate.ps1`
+    （初回のみ実行ポリシーの制限で失敗する場合、管理者権限のPowerShellで
+    `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` を実行してください）
+- ディレクトリ移動の `cd portfolio_analyzer` 等はそのままWindowsでも使用できます
+  （PowerShell・コマンドプロンプトともに`/`区切りのパスも解釈されます）。
+- 後述の「定期実行（例: cron）」はUnix系OS向けの`cron`の例です。
+  Windowsで同等の定期実行を行う場合は、代わりに**タスクスケジューラ**
+  （`schtasks`コマンド、またはGUIの「タスクスケジューラ」アプリ）から
+  `python main.py --portfolio ... --output ...` を実行するタスクを登録してください。
+- それ以外（`pip install`、`python main.py ...`、`python run.py`等）はOS共通で
+  同じコマンドがそのまま使えます。
+
 ## セットアップ
 
 ```bash
@@ -25,7 +58,11 @@ cd portfolio_analyzer
 
 # 仮想環境の作成（任意）
 python3 -m venv .venv
-source .venv/bin/activate
+
+# 仮想環境の有効化
+source .venv/bin/activate        # macOS / Linux
+# .venv\Scripts\activate.bat     # Windows（コマンドプロンプト）
+# .venv\Scripts\Activate.ps1     # Windows（PowerShell）
 
 # 依存ライブラリのインストール
 pip install -r requirements.txt
@@ -294,6 +331,17 @@ code,name,affection_score
 0 18 * * 1-5 cd /path/to/portfolio_analyzer && /path/to/.venv/bin/python main.py --portfolio sample_portfolio.csv --output report_$(date +\%Y\%m\%d).md >> cron.log 2>&1
 ```
 
+`cron`はUnix系OS（macOS/Linux）向けの仕組みです。**Windowsではタスクスケジューラ**
+を使って同様の定期実行が可能です。
+
+```powershell
+# 例: 毎営業日18:00に実行するタスクを登録（管理者権限のPowerShellで実行）
+schtasks /create /tn "PortfolioAnalyzer" /tr "C:\path\to\portfolio_analyzer\.venv\Scripts\python.exe C:\path\to\portfolio_analyzer\main.py --portfolio sample_portfolio.csv --output report.md" /sc weekly /d MON,TUE,WED,THU,FRI /st 18:00
+```
+
+GUIから設定する場合は、「タスクスケジューラ」アプリで新しいタスクを作成し、
+「操作」に上記の`.venv\Scripts\python.exe`と`main.py`のフルパスを指定してください。
+
 ## Web GUI（ブラウザからの操作）
 
 CLIとは別に、ブラウザから操作できるWeb GUI（`webapp/`）を用意しています。
@@ -318,7 +366,7 @@ CLIとは別に、ブラウザから操作できるWeb GUI（`webapp/`）を用�
 
 ```bash
 cd portfolio_analyzer
-source .venv/bin/activate
+source .venv/bin/activate        # Windowsの場合は .venv\Scripts\activate.bat 等（前述の「動作環境」参照）
 pip install -r requirements.txt   # fastapi, uvicorn等が追加されます
 
 cd webapp/frontend
@@ -375,3 +423,11 @@ pytest webapp/tests/
   行ってください。
 - `.env` にはAPIキーが含まれるため、`.gitignore` によりGit管理対象外と
   しています。誤ってコミットしないよう注意してください。
+
+## ライセンス
+
+[MIT License](LICENSE)
+
+本ツールの分析結果・おすすめ銘柄提案は投資助言ではなく、参考情報として
+提供されるものです。投資判断は自己責任で行ってください。作者は本ソフト
+ウェアの利用によって生じたいかなる損害についても責任を負いません。
