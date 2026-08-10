@@ -1,0 +1,316 @@
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  text-align: left;
+}
+
+.app h1 {
+  font-size: 1.8rem;
+  margin: 0 0 24px;
+  text-align: center;
+  font-weight: 800;
+}
+
+/* グラデーションのテキストクリップは絵文字（カラー絵文字グリフ）を透明にして
+   しまうため、絵文字はグラデーション対象から外し、テキスト部分のみに適用する。 */
+.app-title-text {
+  background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.app-title-emoji {
+  filter: drop-shadow(0 1px 2px rgba(99, 102, 241, 0.35));
+}
+
+/* パネル：セクションごとにアクセントカラーの帯を左端に付ける */
+.panel {
+  border: 1px solid var(--border, #e2e8f0);
+  border-left: 6px solid #a5b4fc;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+  transition: box-shadow 0.15s ease;
+}
+
+.panel:hover {
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.14);
+}
+
+.panel:nth-of-type(1) { border-left-color: #60a5fa; } /* ポートフォリオ選択: 青 */
+.panel:nth-of-type(2) { border-left-color: #f472b6; } /* 愛着度設定: ピンク */
+.panel:nth-of-type(3) { border-left-color: #34d399; } /* 実行オプション: 緑 */
+.panel:nth-of-type(4) { border-left-color: #fbbf24; } /* 実行状況: 黄 */
+.panel:nth-of-type(5) { border-left-color: #a78bfa; } /* レポート: 紫 */
+.panel:nth-of-type(6) { border-left-color: #f97316; } /* 履歴: オレンジ */
+
+.panel h2 {
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.checkbox-row:hover {
+  background: #f1f5f9;
+}
+
+.hint {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-top: -4px;
+  margin-bottom: 12px;
+  background: #eef2ff;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.error {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+.error::before {
+  content: '⚠️ ';
+}
+
+.success {
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+/* ボタン共通スタイル */
+button {
+  font: inherit;
+}
+
+.btn,
+.field > button,
+.checkbox-row + .field > button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
+}
+
+.btn:hover:not(:disabled),
+.field > button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+}
+
+.btn:disabled,
+.field > button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #64748b, #94a3b8);
+  box-shadow: 0 2px 6px rgba(100, 116, 139, 0.3);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ec4899, #f472b6);
+  box-shadow: 0 2px 6px rgba(236, 72, 153, 0.35);
+}
+
+.btn-run {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+  font-size: 1.05rem;
+  padding: 10px 22px;
+}
+
+/* 愛着度テーブル */
+.preferences-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.preferences-table th {
+  background: linear-gradient(135deg, #fbcfe8, #f9a8d4);
+  color: #831843;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.preferences-table td {
+  border-bottom: 1px solid #f1f5f9;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.preferences-table tr:nth-child(even) td {
+  background: #fdf2f8;
+}
+
+.score-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-emoji {
+  font-size: 1.1rem;
+}
+
+.preferences-table input[type='number'] {
+  width: 72px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+
+/* ステータスバッジ（実行状況） */
+.status-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.status-pending {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.status-running {
+  background: #dbeafe;
+  color: #1e40af;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.status-succeeded {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* レポート履歴 */
+.report-history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.report-history li {
+  margin-bottom: 6px;
+}
+
+.report-history button {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-align: left;
+  width: 100%;
+  font-size: 0.9rem;
+  transition: background 0.1s ease;
+}
+
+.report-history button:hover {
+  background: #ffedd5;
+}
+
+/* レポートMarkdown表示 */
+.report-markdown {
+  overflow-x: auto;
+  background: #fafaff;
+  border-radius: 10px;
+  padding: 4px 16px;
+}
+
+.report-markdown table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 12px 0;
+}
+
+.report-markdown th,
+.report-markdown td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.report-markdown th {
+  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+  color: #4c1d95;
+}
+
+.report-markdown tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+.report-markdown blockquote {
+  border-left: 4px solid #fbbf24;
+  background: #fffbeb;
+  margin: 12px 0;
+  padding: 8px 16px;
+  border-radius: 0 8px 8px 0;
+}
+
+.report-markdown h2,
+.report-markdown h3 {
+  color: #4338ca;
+}

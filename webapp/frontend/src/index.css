@@ -1,0 +1,37 @@
+:root {
+  --text: #3f3f46;
+  --text-h: #18181b;
+  --bg: #f4f6fb;
+  --border: #e2e8f0;
+
+  --sans: system-ui, 'Segoe UI', Roboto, 'Hiragino Sans', 'Yu Gothic', sans-serif;
+
+  font: 16px/1.6 var(--sans);
+  color-scheme: light;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #eef2ff 0%, #f4f6fb 40%, #fdf4ff 100%);
+}
+
+h1,
+h2 {
+  font-family: var(--sans);
+  color: var(--text-h);
+}
+
+p {
+  margin: 0;
+}

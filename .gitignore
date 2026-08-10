@@ -1,0 +1,26 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 実行時に生成されるキャッシュ・ログ・レポート
+price_cache.json
+news_cache.json
+*.log
+analysis_report.md
+report*.md
+
+# 楽天証券からダウンロードした実際の資産残高CSV・取引履歴CSV（個人の保有情報のため）
+assetbalance_*.csv
+tradehistoryJP_*.csv
+
+# 実際の保有銘柄コードを含む愛着度設定（sample_preferences.csvは対象外）
+stock_preferences.csv
+
+# Web GUI（webapp/）の実行時データ（アップロードCSV・生成レポート、個人情報を含む）
+webapp/data/
+
+# Web GUIフロントエンド（Vite + React）
+webapp/frontend/node_modules/
+webapp/frontend/dist/

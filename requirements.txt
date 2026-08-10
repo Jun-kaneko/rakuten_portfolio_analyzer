@@ -1,0 +1,14 @@
+pandas
+yfinance
+anthropic
+python-dotenv
+requests
+
+# Web GUI（webapp/）用
+fastapi
+uvicorn[standard]
+python-multipart
+
+# 開発用（webapp/tests/ の実行に必要）
+pytest
+httpx
